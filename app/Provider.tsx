@@ -7,7 +7,9 @@ import { useEffect } from "react";
 import { UserDetailContext } from "@/context/UserDetailContext";
 import { useState } from "react";
 
-function Provider({ children }: Readonly<{ children: React.ReactNode }>) {
+export function Provider({
+  children,
+}: Readonly<{ children: React.ReactNode }>) {
   const { user } = useUser();
   const createUser = useMutation(api.user.CreateNewUser);
   const [userDetail, setUserDetail] = useState<any>();
@@ -27,8 +29,9 @@ function Provider({ children }: Readonly<{ children: React.ReactNode }>) {
     }
   };
 
-  return;
-  <UserDetailContext.Provider value={{ userDetail, setUserDetail }}>
-    <div>{children}</div>
-  </UserDetailContext.Provider>;
+  return (
+    <UserDetailContext.Provider value={{ userDetail, setUserDetail }}>
+      <div>{children}</div>
+    </UserDetailContext.Provider>
+  );
 }
