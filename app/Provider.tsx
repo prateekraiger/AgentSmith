@@ -1,0 +1,34 @@
+"use client";
+
+import { useUser } from "@clerk/nextjs";
+import { useMutation } from "convex/react";
+import { api } from "@/convex/_generated/api";
+import { useEffect } from "react";
+import { UserDetailContext } from "@/context/UserDetailContext";
+import { useState } from "react";
+
+function Provider({ children }: Readonly<{ children: React.ReactNode }>) {
+  const { user } = useUser();
+  const createUser = useMutation(api.user.CreateNewUser);
+  const [userDetail, setUserDetail] = useState<any>();
+
+  useEffect(() => {
+    user && CreateAndGetUser();
+  }, [user]);
+
+  const CreateAndGetUser = async () => {
+    if (user) {
+      const result = await createUser({
+        name: user.fullName ?? "",
+        email: user.primaryEmailAddress?.emailAddress ?? "",
+      });
+      // save to context
+      setUserDetail(result);
+    }
+  };
+
+  return;
+  <UserDetailContext.Provider value={{ userDetail, setUserDetail }}>
+    <div>{children}</div>
+  </UserDetailContext.Provider>;
+}
