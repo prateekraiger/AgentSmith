@@ -1,9 +1,12 @@
-import React from 'react'
+import React from "react";
+import CreateAgentSection from "./_components/CreateAgentSection";
 
 const Dashboard = () => {
   return (
-    <div>Dashboard</div>
-  )
-}
+    <div>
+      <CreateAgentSection />
+    </div>
+  );
+};
 
-export default Dashboard
+export default Dashboard;
