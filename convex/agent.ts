@@ -11,7 +11,7 @@ export const CreateAgent = mutation({
     const result = await ctx.db.insert("AgentTable", {
       name: args.name,
       agentId: args.agentId,
-        published: false,
+      published: false,
       userId: args.userId,
     });
     return result;
