@@ -5,7 +5,7 @@ export const CreateAgent = mutation({
   args: {
     name: v.string(),
     agentId: v.string(),
-    userId: v.id("userTable"),
+    userId: v.id("UserTable"),
   },
   handler: async (ctx, args) => {
     const result = await ctx.db.insert("AgentTable", {
@@ -20,7 +20,7 @@ export const CreateAgent = mutation({
 
 export const GetUserAgents = query({
   args: {
-    userId: v.id("userTable"),
+    userId: v.id("UserTable"),
   },
   handler: async (ctx, args) => {
     const result = await ctx.db

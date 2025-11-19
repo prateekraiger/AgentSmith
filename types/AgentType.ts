@@ -6,6 +6,6 @@ export type Agent = {
   config?: any;
   published: boolean;
   name: string;
-  userId: Id<"userTable">;
+  userId: Id<"UserTable">;
   _creationTime: number;
 };
