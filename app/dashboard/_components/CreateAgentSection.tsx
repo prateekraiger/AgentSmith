@@ -66,7 +66,7 @@ function CreateAgentSection() {
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
-            <DialogClose>
+            <DialogClose asChild>
               <Button variant={"ghost"} disabled={loader}>
                 {loader && <Loader2Icon className="animate-spin" />}
                 Cancel
