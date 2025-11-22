@@ -9,10 +9,12 @@ import {
   Background,
   MiniMap,
   Controls,
+  Panel,
 } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
 import StartNode from "../_components/StartNode";
 import AgentNode from "../_components/AgentNode";
+import AgentToolsPanel from "../_components/AgentToolsPanel";
 
 const initialNodes = [
   {
@@ -72,6 +74,10 @@ function AgentBuilder() {
           <Controls />
           {/* @ts-ignore */}
           <Background variant="dots" gap={12} size={1} />
+          <Panel position="top-left">
+            <AgentToolsPanel />
+          </Panel>
+          <Panel position="top-right">Settings</Panel>
         </ReactFlow>
       </div>
     </div>
