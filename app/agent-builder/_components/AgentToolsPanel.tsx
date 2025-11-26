@@ -57,13 +57,18 @@ const AgentTools = [
   },
 ];
 
-const { addedNodes, setAddedNodes } = useContext(WorkflowContext);
 function AgentToolsPanel() {
+  const { addedNodes, setAddedNodes } = useContext(WorkflowContext);
   const onAgentToolClick = (tool: any) => {
     const newNode = {
       id: `${tool.id}-${Date.now()}`,
-      Position: { x: 0, y: 100 },
-      data: { label: tool.name, ...tool },
+      position: { x: 0, y: 100 },
+      data: {
+        label: tool.name,
+        bgColor: tool.bgColor,
+        id: tool.id,
+        type: tool.type,
+      },
       type: tool.type,
     };
     setAddedNodes((prev: any) => [...prev, newNode]);

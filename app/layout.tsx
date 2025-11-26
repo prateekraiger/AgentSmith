@@ -4,6 +4,7 @@ import "./globals.css";
 import { ConvexClientProvider } from "./ConvexClientProvider";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Provider } from "./Provider";
+import { Toaster } from "sonner";
 
 export const metadata: Metadata = {
   title: "AgentSmith",
@@ -22,8 +23,8 @@ export default function RootLayout({
       <html lang="en">
         <body className={outfit.className}>
           <ConvexClientProvider>
-            
             <Provider>{children}</Provider>
+            <Toaster />
           </ConvexClientProvider>
         </body>
       </html>

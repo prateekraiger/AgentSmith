@@ -20,7 +20,7 @@ export function Provider({
   const [addedNodes, setAddedNodes] = useState([
     {
       id: "start",
-      Position: { x: 0, y: 0 },
+      position: { x: 0, y: 0 },
       data: { label: "Start" },
       type: "StartNode",
     },
