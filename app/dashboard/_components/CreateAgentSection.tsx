@@ -38,7 +38,7 @@ function CreateAgentSection() {
     console.log("Agent Created: ", result);
     setOpenDialog(false);
     setLoader(false);
-    router.push("/agent-builder" + agentId);
+    router.push("/agent-builder/" + agentId);
   };
 
   return (
