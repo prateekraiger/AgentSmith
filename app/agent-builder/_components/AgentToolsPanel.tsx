@@ -23,15 +23,15 @@ const AgentTools = [
     icons: Square,
     bgColor: "#FFE3E3",
     id: "end",
-    type: "endNode",
+    type: "EndNode",
   },
 
   {
     name: "If/Else",
     icons: Merge,
     bgColor: "#FFF3CD",
-    id: "IfElseNode",
-    type: "ifElse",
+    id: "IfElse",
+    type: "IfElseNode",
   },
   {
     name: "While",
@@ -46,7 +46,7 @@ const AgentTools = [
     icons: ThumbsUp,
     bgColor: "#EADCF8",
     id: "approval",
-    type: "ApprovalNode",
+    type: "UserAprovalNode",
   },
   {
     name: "API",

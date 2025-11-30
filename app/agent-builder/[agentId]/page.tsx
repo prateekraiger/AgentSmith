@@ -28,10 +28,21 @@ import { api } from "@/convex/_generated/api";
 import { useParams } from "next/navigation";
 import { Agent } from "@/types/AgentType";
 import { toast } from "sonner";
+import EndNode from "../_customNodes/EndNode";
+import IfElseNode from "../_customNodes/IfElseNode";
+import WhileNode from "../_customNodes/WhileNode";
+import { User } from "lucide-react";
+import UserAprovalNode from "../_customNodes/UserApprovalNode";
+import ApiNode from "../_customNodes/ApiNode";
 
 const nodeTypes = {
   StartNode: StartNode,
   AgentNode: AgentNode,
+  EndNode: EndNode,
+  IfElseNode: IfElseNode,
+  WhileNode: WhileNode,
+  UserAprovalNode: UserAprovalNode,
+  ApiNode: ApiNode,
 };
 
 function AgentBuilder() {

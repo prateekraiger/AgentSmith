@@ -1,15 +1,20 @@
 import { Handle, Position } from "@xyflow/react";
-import { MousePointer2, Pointer } from "lucide-react";
+import { Webhook } from "lucide-react";
 import React from "react";
 
-function AgentNode() {
+function ApiNode({ data }: any) {
   return (
     <div className="bg-white rounded-2xl p-2 px-4 border">
       <div className="flex gap-2 items-center">
-        <MousePointer2 className="p-2 rounded-lg w-8 h-8 bg-blue-100" />
+        <Webhook
+          className="p-2 rounded-lg w-8 h-8 "
+          style={{
+            backgroundColor: data?.bgColor,
+          }}
+        />
         <div className="flex flex-col">
-          <h2>Agent</h2>
-          <p className="text-xs text-gray-500">agent</p>
+          <h2>API</h2>
+          <p className="text-xs text-gray-500">api</p>
         </div>
         <Handle type="target" position={Position.Left} />
         <Handle type="source" position={Position.Right} />
@@ -18,4 +23,4 @@ function AgentNode() {
   );
 }
 
-export default AgentNode;
+export default ApiNode;
