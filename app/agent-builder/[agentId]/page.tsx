@@ -1,11 +1,5 @@
 "use client";
-import React, {
-  useCallback,
-  useContext,
-  useState,
-  useEffect,
-  use,
-} from "react";
+import { useCallback, useContext, useState, useEffect } from "react";
 import Header from "../_components/Header";
 import {
   ReactFlow,
@@ -16,13 +10,14 @@ import {
   MiniMap,
   Controls,
   Panel,
+  useOnSelectionChange,
+  OnSelectionChangeParams,
 } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
 import StartNode from "../_customNodes/StartNode";
 import AgentNode from "../_customNodes/AgentNode";
 import AgentToolsPanel from "../_components/AgentToolsPanel";
 import { WorkflowContext } from "@/context/WorkflowContext";
-import { set } from "react-hook-form";
 import { useConvex, useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { useParams } from "next/navigation";
@@ -31,9 +26,9 @@ import { toast } from "sonner";
 import EndNode from "../_customNodes/EndNode";
 import IfElseNode from "../_customNodes/IfElseNode";
 import WhileNode from "../_customNodes/WhileNode";
-import { User } from "lucide-react";
 import UserAprovalNode from "../_customNodes/UserApprovalNode";
 import ApiNode from "../_customNodes/ApiNode";
+import SettingPanel from "../_components/SettingPanel";
 
 const nodeTypes = {
   StartNode: StartNode,
@@ -51,6 +46,8 @@ function AgentBuilder() {
     setAddedNodes: setNodes,
     nodeEdges: edges,
     setNodeEdges: setEdges,
+    setSelectedNode,
+    selectedNode,
   } = useContext(WorkflowContext);
 
   const onNodesChange = useCallback(
@@ -94,6 +91,18 @@ function AgentBuilder() {
     toast.success("Saved");
   };
 
+  const onNodeSelect = useCallback(
+    ({ nodes, edges }: OnSelectionChangeParams) => {
+      setSelectedNode(nodes[0]);
+      console.log(nodes[0]);
+    },
+    [setSelectedNode]
+  );
+
+  useOnSelectionChange({
+    onChange: onNodeSelect,
+  });
+
   return (
     <div>
       <Header agentDetail={agentDetail} onSave={SaveNodesAndEdges} />
@@ -114,7 +123,9 @@ function AgentBuilder() {
           <Panel position="top-left">
             <AgentToolsPanel />
           </Panel>
-          <Panel position="top-right">Settings</Panel>
+          <Panel position="top-right">
+            <SettingPanel />
+          </Panel>
         </ReactFlow>
       </div>
     </div>

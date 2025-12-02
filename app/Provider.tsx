@@ -8,7 +8,7 @@ import { UserDetailContext } from "@/context/UserDetailContext";
 import { useState } from "react";
 import { Workflow } from "lucide-react";
 import { WorkflowContext } from "@/context/WorkflowContext";
-import { Position } from "@xyflow/react";
+import { Position, ReactFlowProvider } from "@xyflow/react";
 
 export function Provider({
   children,
@@ -16,6 +16,7 @@ export function Provider({
   const { user } = useUser();
   const createUser = useMutation(api.user.CreateNewUser);
   const [userDetail, setUserDetail] = useState<any>();
+  const [selectedNode, setSelectedNode] = useState<any>();
 
   const [addedNodes, setAddedNodes] = useState([
     {
@@ -45,11 +46,20 @@ export function Provider({
 
   return (
     <UserDetailContext.Provider value={{ userDetail, setUserDetail }}>
-      <WorkflowContext.Provider
-        value={{ addedNodes, setAddedNodes, nodeEdges, setNodeEdges }}
-      >
-        <div>{children}</div>
-      </WorkflowContext.Provider>
+      <ReactFlowProvider>
+        <WorkflowContext.Provider
+          value={{
+            addedNodes,
+            setAddedNodes,
+            nodeEdges,
+            setNodeEdges,
+            selectedNode,
+            setSelectedNode,
+          }}
+        >
+          <div>{children}</div>
+        </WorkflowContext.Provider>
+      </ReactFlowProvider>
     </UserDetailContext.Provider>
   );
 }
