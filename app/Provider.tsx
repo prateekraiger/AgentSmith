@@ -17,7 +17,7 @@ export function Provider({
   const createUser = useMutation(api.user.CreateNewUser);
   const [userDetail, setUserDetail] = useState<any>();
   const [selectedNode, setSelectedNode] = useState<any>();
-
+  const [saveTrigger, setSaveTrigger] = useState<any>();
   const [addedNodes, setAddedNodes] = useState([
     {
       id: "start",
@@ -55,6 +55,8 @@ export function Provider({
             setNodeEdges,
             selectedNode,
             setSelectedNode,
+            saveTrigger,
+            setSaveTrigger,
           }}
         >
           <div>{children}</div>

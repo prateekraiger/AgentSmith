@@ -60,15 +60,31 @@ const AgentTools = [
 function AgentToolsPanel() {
   const { addedNodes, setAddedNodes } = useContext(WorkflowContext);
   const onAgentToolClick = (tool: any) => {
+    const uniqueId = `${tool.id}-${Date.now()}`;
+    let newNodeData: any = {
+      label: tool.name,
+      bgColor: tool.bgColor,
+      id: uniqueId,
+      type: tool.type,
+    };
+
+    // For AgentNode, create a more detailed data structure
+    if (tool.type === "AgentNode") {
+      newNodeData = {
+        ...newNodeData,
+        name: tool.name,
+        instruction: "",
+        includeChatHistory: true,
+        model: "gemini-1.5-pro",
+        output: "text",
+        schema: "",
+      };
+    }
+
     const newNode = {
-      id: `${tool.id}-${Date.now()}`,
-      position: { x: 0, y: 100 },
-      data: {
-        label: tool.name,
-        bgColor: tool.bgColor,
-        id: tool.id,
-        type: tool.type,
-      },
+      id: uniqueId,
+      position: { x: Math.random() * 400, y: Math.random() * 400 }, // Use random position to avoid overlap
+      data: newNodeData,
       type: tool.type,
     };
     setAddedNodes((prev: any) => [...prev, newNode]);

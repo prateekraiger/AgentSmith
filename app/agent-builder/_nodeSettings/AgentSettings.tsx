@@ -12,8 +12,36 @@ import { Select } from "@radix-ui/react-select";
 import { FileJson } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
+import { useEffect, useState } from "react";
 
-function AgentSettings({ selectedNode }: any) {
+function AgentSettings({ selectedNode, UpdateFormData }: any) {
+  const [formData, setFormData] = useState({
+    name: "",
+    instruction: "",
+    includeChatHistory: true,
+    model: "gemini-2.5-pro",
+    output: "text",
+    schema: "",
+  });
+
+  useEffect(() => {
+    if (selectedNode && selectedNode.data) {
+      selectedNode?.data?.settings;
+    }
+  }, [selectedNode]);
+
+  const handleChange = (key: string, value: any) => {
+    setFormData((prev) => ({
+      ...prev,
+      [key]: value,
+    }));
+  };
+
+  const onSave = () => {
+    console.log(formData);
+    UpdateFormData(formData);
+  };
+
   return (
     <div>
       <h2 className="font-bold">Agent</h2>
@@ -22,11 +50,19 @@ function AgentSettings({ selectedNode }: any) {
       </p>
       <div className="mt-3 space-y-1">
         <Label>Name</Label>
-        <Input placeholder="Agent Name" />
+        <Input
+          placeholder="Agent Name"
+          value={formData?.name}
+          onChange={(event) => handleChange("name", event.target.value)}
+        />
       </div>
       <div className="mt-3 space-y-1">
         <Label>Instruction</Label>
-        <Textarea placeholder="Instruction" />
+        <Textarea
+          placeholder="Instruction"
+          value={formData?.instruction}
+          onChange={(event) => handleChange("instruction", event.target.value)}
+        />
         <h2 className="text-sm p-1 flex gap-2 ">
           Add Context <FileJson className="h-3 w-3" />
         </h2>
@@ -34,12 +70,20 @@ function AgentSettings({ selectedNode }: any) {
 
       <div className="mt-3 space-y-1 flex justify-between ">
         <Label>Include Chat History</Label>
-        <Switch checked={true} />
+        <Switch
+          checked={formData.includeChatHistory}
+          onCheckedChange={(checked) =>
+            handleChange("includeChatHistory", checked)
+          }
+        />
       </div>
 
       <div className="mt-3 flex justify-between items-center">
         <Label>Model</Label>
-        <Select>
+        <Select
+          value={formData.model}
+          onValueChange={(value) => handleChange("model", value)}
+        >
           <SelectTrigger>
             <SelectValue placeholder="gemini-2.5-pro"></SelectValue>
           </SelectTrigger>
@@ -53,7 +97,7 @@ function AgentSettings({ selectedNode }: any) {
 
       <div>
         <Label>Output Format</Label>
-        <Tabs defaultValue="Text" className="w-[400px]">
+        <Tabs value={formData.output} defaultValue="Text" className="w-full">
           <TabsList>
             <TabsTrigger value="Text">Text</TabsTrigger>
             <TabsTrigger value="Json">Json</TabsTrigger>
@@ -64,13 +108,17 @@ function AgentSettings({ selectedNode }: any) {
           <TabsContent value="Json">
             <Label className="text-sm text-gray-500">Enter Json Schema</Label>
             <Textarea
+              value={formData.schema}
               placeholder="{title:string}"
               className="max-w-[300px] mt-2"
+              onChange={(event) => handleChange("schema", event.target.value)}
             />
           </TabsContent>
         </Tabs>
       </div>
-      <Button className="w-full mt-5">Save</Button>
+      <Button className="w-full mt-5" onClick={onSave}>
+        Save
+      </Button>
     </div>
   );
 }

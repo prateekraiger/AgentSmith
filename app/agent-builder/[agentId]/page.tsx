@@ -20,7 +20,7 @@ import AgentToolsPanel from "../_components/AgentToolsPanel";
 import { WorkflowContext } from "@/context/WorkflowContext";
 import { useConvex, useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { Agent } from "@/types/AgentType";
 import { toast } from "sonner";
 import EndNode from "../_customNodes/EndNode";
@@ -48,6 +48,8 @@ function AgentBuilder() {
     setNodeEdges: setEdges,
     setSelectedNode,
     selectedNode,
+    saveTrigger,
+    setSaveTrigger,
   } = useContext(WorkflowContext);
 
   const onNodesChange = useCallback(
@@ -67,24 +69,52 @@ function AgentBuilder() {
 
   const convex = useConvex();
   const { agentId } = useParams();
+  const router = useRouter();
   const [agentDetail, setAgentDetail] = useState<Agent>();
   useEffect(() => {
     GetAgentDetail();
   }, []);
 
+  useEffect(() => {
+    if (saveTrigger) {
+      SaveNodesAndEdges();
+      setSaveTrigger(false);
+    }
+  }, [saveTrigger]);
+
+  useEffect(() => {
+    if (agentDetail) {
+      if (agentDetail.nodes && agentDetail.nodes.length > 0) {
+        setNodes(agentDetail.nodes);
+      }
+      if (agentDetail.edges) {
+        setEdges(agentDetail.edges);
+      }
+    }
+  }, [agentDetail]);
+
   const GetAgentDetail = async () => {
     const result = await convex.query(api.agent.GetAgentById, {
       agentId: agentId as string,
     });
-    setAgentDetail(result);
+
+    if (!result) {
+      toast.error("Agent not found. Redirecting to dashboard.");
+      router.push("/dashboard");
+    } else {
+      setAgentDetail(result);
+    }
   };
 
   const UpdateAgentDetail = useMutation(api.agent.UpdateAgentDetail);
 
   const SaveNodesAndEdges = async () => {
+    if (!agentDetail) {
+      toast.error("Agent details not loaded yet. Please wait and try again.");
+      return;
+    }
     const result = await UpdateAgentDetail({
-      // @ts-ignore
-      id: agentDetail?._id,
+      id: agentDetail._id,
       nodes: nodes,
       edges: edges,
     });
