@@ -79,6 +79,12 @@ function AgentToolsPanel() {
         output: "text",
         schema: "",
       };
+    } else if (tool.type === "IfElseNode") {
+      newNodeData = {
+        ...newNodeData,
+        name: tool.name,
+        condition: "",
+      };
     }
 
     const newNode = {

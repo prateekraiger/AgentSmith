@@ -1,8 +1,11 @@
 import { WorkflowContext } from "@/context/WorkflowContext";
 import React, { useContext } from "react";
 import AgentSetttings from "../_nodeSettings/AgentSettings";
-import EndSettings from "../_nodeSettings/EndSettings"; // Added this import
+import EndSettings from "../_nodeSettings/EndSettings";
+import IfElseSettings from "../_nodeSettings/IfElseSettings";
 import { toast } from "sonner";
+import WhileSettings from "../_nodeSettings/WhileSettings";
+import UserApproval from "../_nodeSettings/UserApproval";
 
 function SettingPanel() {
   const { selectedNode, setAddedNodes, addedNodes, setSaveTrigger } =
@@ -42,6 +45,26 @@ function SettingPanel() {
         )}
         {selectedNode?.type == "EndNode" && (
           <EndSettings
+            selectedNode={selectedNode}
+            UpdateFormData={onUpdateNodeData}
+          />
+        )}
+        {selectedNode?.type == "IfElseNode" && (
+          <IfElseSettings
+            selectedNode={selectedNode}
+            UpdateFormData={onUpdateNodeData}
+          />
+        )}
+
+        {selectedNode?.type == "WhileNode" && (
+          <WhileSettings
+            selectedNode={selectedNode}
+            UpdateFormData={onUpdateNodeData}
+          />
+        )}
+
+        {selectedNode?.type == "UserAprovalNode" && (
+          <UserApproval
             selectedNode={selectedNode}
             UpdateFormData={onUpdateNodeData}
           />

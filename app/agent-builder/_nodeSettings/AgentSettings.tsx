@@ -31,7 +31,7 @@ function AgentSettings({ selectedNode, UpdateFormData }: any) {
   }, [selectedNode]);
 
   const handleChange = (key: string, value: any) => {
-    setFormData((prev) => ({
+    setFormData((prev: any) => ({
       ...prev,
       [key]: value,
     }));
