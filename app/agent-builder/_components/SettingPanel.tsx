@@ -6,6 +6,7 @@ import IfElseSettings from "../_nodeSettings/IfElseSettings";
 import { toast } from "sonner";
 import WhileSettings from "../_nodeSettings/WhileSettings";
 import UserApproval from "../_nodeSettings/UserApproval";
+import ApiAgentSettings from "../_nodeSettings/ApiSettings";
 
 function SettingPanel() {
   const { selectedNode, setAddedNodes, addedNodes, setSaveTrigger } =
@@ -65,6 +66,13 @@ function SettingPanel() {
 
         {selectedNode?.type == "UserAprovalNode" && (
           <UserApproval
+            selectedNode={selectedNode}
+            UpdateFormData={onUpdateNodeData}
+          />
+        )}
+
+        {selectedNode?.type == "ApiNode" && (
+          <ApiAgentSettings
             selectedNode={selectedNode}
             UpdateFormData={onUpdateNodeData}
           />
